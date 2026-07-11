@@ -216,3 +216,19 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project data
+DiveFace_subset/
+*.pkl
+
+# Model checkpoints
+*.pth
+*.pt
+*.ckpt
+
+# Generated datasets
+diveface_cr_fiqa_scores.csv
+diveface_fiqa_merged.csv
+
+# Generated results
+results/
