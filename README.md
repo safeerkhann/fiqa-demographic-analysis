@@ -18,7 +18,7 @@ The project includes:
 
 ---
 
-## Research Objective
+### Research Objective
 
 The main objective is to answer the following question:
 
@@ -32,7 +32,7 @@ The project further investigates:
 
 ---
 
-## Repository Structure
+### Repository Structure
 
 ```text
 fiqa-demographic-analysis/
@@ -49,9 +49,9 @@ fiqa-demographic-analysis/
 
 ---
 
-## Workflow
+### Workflow
 
-### 1. Environment Setup
+#### 1. Environment Setup
 
 `00_colab_setup.ipynb`
 
@@ -60,7 +60,7 @@ fiqa-demographic-analysis/
 - Downloads the CR-FIQA repository
 - Installs required dependencies
 
-### 2. CR-FIQA Score Extraction
+#### 2. CR-FIQA Score Extraction
 
 `01_extract_and_merge_cr_fiqa_scores.ipynb`
 
@@ -69,7 +69,7 @@ fiqa-demographic-analysis/
 - Merges scores with DiveFace annotations
 - Creates the final merged dataset
 
-### 3. Exploratory Data Analysis
+#### 3. Exploratory Data Analysis
 
 `02_exploratory_data_analysis.ipynb`
 
@@ -81,7 +81,7 @@ fiqa-demographic-analysis/
 
 ---
 
-## Required Data
+### Required Data
 
 The following files are required but are not included in this repository:
 
@@ -95,7 +95,7 @@ Place these files inside your project directory before running the notebooks.
 
 ---
 
-## Environment
+### Environment
 
 The project was developed using:
 
@@ -110,7 +110,7 @@ The project was developed using:
 
 ---
 
-## Current Status
+### Current Status
 
 Completed:
 
@@ -127,7 +127,7 @@ Planned:
 
 ---
 
-## Dataset
+### Dataset
 
 This repository does not contain the DiveFace dataset or model checkpoints.
 
@@ -135,6 +135,6 @@ Please obtain the dataset and pretrained weights from their respective sources.
 
 ---
 
-## License
+### License
 
 MIT License
