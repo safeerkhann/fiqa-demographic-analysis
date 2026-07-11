@@ -1,7 +1,7 @@
 # Fiqa-demographic-analysis
 ## Predicting FIQA Scores from Facial Attributes
 
-## Overview
+### Overview
 
 This project investigates whether Face Image Quality Assessment (FIQA) scores can be predicted from facial attributes and demographic information.
 
