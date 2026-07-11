@@ -1,5 +1,5 @@
 # Fiqa-demographic-analysis
-# Predicting FIQA Scores from Facial Attributes
+## Predicting FIQA Scores from Facial Attributes
 
 ## Overview
 
