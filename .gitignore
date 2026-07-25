@@ -217,11 +217,20 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Project data
+# -------------------------------------------------------------------
+# FIQA project-specific files
+# -------------------------------------------------------------------
+
+# Raw image data
 DiveFace_subset/
+DiveFace_subset.zip
+DiveFace_subset_*.zip
+
+# Annotation files
+DiveFace_subset_annotations.pkl
 *.pkl
 
-# Model checkpoints
+# Pretrained model checkpoints
 *.pth
 *.pt
 *.ckpt
@@ -230,5 +239,30 @@ DiveFace_subset/
 diveface_cr_fiqa_scores.csv
 diveface_fiqa_merged.csv
 
-# Generated results
-results/
+# Generated models
+models/*
+!models/.gitkeep
+
+*.joblib
+*.pickle
+
+# Generated analysis results
+results/*
+!results/.gitkeep
+
+# Additional generated files
+*.npy
+*.npz
+
+# Temporary notebook files
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# Google Colab and local runtime files
+/content/
+drive/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+desktop.ini
