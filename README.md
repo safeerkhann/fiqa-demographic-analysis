@@ -1,43 +1,43 @@
 # FIQA-Demographic-Analysis
 
-## Predicting Face Image Quality Assessment (FIQA) Scores from Facial Attributes and Demographic Information
+## Predicting Face Image Quality Assessment (FIQA) Scores from Facial Attributes and Demographic Characteristics
 
 ### Overview
 
-This project investigates whether Face Image Quality Assessment (FIQA) scores can be predicted from facial attributes and demographic characteristics.
+This project investigates whether Face Image Quality Assessment (FIQA) scores can be predicted from facial attributes and demographic information.
 
-The analysis combines facial attribute annotations from the DiveFace dataset with quality scores generated using the CR-FIQA framework.
+The analysis combines facial attribute annotations from the DiveFace dataset with image quality scores generated using the CR-FIQA framework. Statistical analyses and machine learning models are used to investigate which facial and image characteristics are associated with FIQA scores and whether these relationships remain consistent across demographic groups.
 
-The project explores the relationship between image quality, facial characteristics, and demographic information through exploratory data analysis and machine learning.
+The complete workflow includes data preparation, exploratory analysis, predictive modeling, statistical inference, model explainability, and demographic consistency analysis.
 
 ---
 
-## Research Objective
+# Research Objectives
 
 The primary research question is:
 
-> To what extent can FIQA scores be predicted from facial attributes and demographic characteristics?
+> **To what extent can FIQA scores be predicted from facial attributes, image characteristics, and demographic information?**
 
-Additional objectives include:
+The project further investigates:
 
-- Identifying facial attributes most strongly associated with FIQA scores
-- Investigating differences in FIQA score distributions across demographic groups
-- Comparing machine learning models for FIQA score prediction
-- Analyzing the importance of demographic and facial attributes in FIQA prediction
+- Which facial and image characteristics are associated with FIQA scores
+- Which characteristics remain significant after adjustment for other predictors
+- Which machine learning models best predict FIQA scores
+- Which features are most important for nonlinear prediction
+- Whether feature–FIQA relationships remain consistent across demographic groups
 
 ---
 
-## Dataset
+# Dataset
 
-The project uses:
+## DiveFace
 
-### DiveFace
+The project uses the DiveFace dataset containing
 
-A large-scale facial image dataset containing:
-
-- Demographic group labels
-- Facial attribute annotations
-- Multiple identities per demographic group
+- facial images
+- demographic group labels
+- facial attribute annotations
+- multiple identities per demographic group
 
 Demographic groups:
 
@@ -48,15 +48,17 @@ Demographic groups:
 - Caucasian Woman
 - Caucasian Man
 
-### CR-FIQA
+---
 
-CR-FIQA is used to generate image quality scores for all images.
+## CR-FIQA
+
+Image quality scores are generated using the CR-FIQA framework.
 
 The resulting FIQA scores are merged with the DiveFace annotations to create the final analysis dataset.
 
 ---
 
-## Repository Structure
+# Repository Structure
 
 ```text
 fiqa-demographic-analysis/
@@ -66,127 +68,162 @@ fiqa-demographic-analysis/
 │   ├── 01_extract_and_merge_cr_fiqa_scores.ipynb
 │   ├── 02_exploratory_data_analysis.ipynb
 │   ├── 03_ml_models.ipynb
-│   ├── 04_model_interpretation.ipynb     (planned)
-│   └── 05_bias_analysis.ipynb            (planned)
+│   ├── 04_model_optimization.ipynb
+│   ├── 05_rq2_correlation_analysis.ipynb
+│   ├── 06_rq3_regression_analysis.ipynb
+│   ├── 07_model_explainability.ipynb
+│   └── 08_demographic_consistency_analysis.ipynb
 │
+├── models/
+├── results/
 ├── README.md
 ├── LICENSE
+├── requirements.txt
 └── .gitignore
 ```
 
 ---
 
-## Workflow
+# Workflow
 
-### 1. Environment Setup
+## 00 — Environment Setup
 
-**00_colab_setup.ipynb**
-
-- Mount Google Drive
-- Verify project files
-- Download CR-FIQA repository
-- Install required dependencies
+- Project setup
+- Dependency installation
+- Google Drive configuration
+- CR-FIQA setup
 
 ---
 
-### 2. CR-FIQA Score Extraction
-
-**01_extract_and_merge_cr_fiqa_scores.ipynb**
+## 01 — CR-FIQA Score Extraction
 
 - Load pretrained CR-FIQA model
-- Generate FIQA scores for all images
-- Merge FIQA scores with DiveFace annotations
-- Create the final merged dataset
+- Generate FIQA scores
+- Merge scores with DiveFace annotations
+- Export merged dataset
 
 ---
 
-### 3. Exploratory Data Analysis
+## 02 — Exploratory Data Analysis
 
-**02_exploratory_data_analysis.ipynb**
-
-- Descriptive statistics
+- Dataset overview
+- Missing-value analysis
 - Distribution analysis
-- Correlation analysis
-- Demographic group analysis
-- Scatterplots and visualizations
+- Demographic overview
+- Correlation exploration
+- Visualizations
 
 ---
 
-### 4. Machine Learning Models
+## 03 — Machine Learning Models
 
-**03_ml_models.ipynb**
-
-- Identity-aware train-test split
+- Identity-aware train/test split
 - Feature preprocessing
-- One-hot encoding of demographic groups
-- Model training and evaluation
+- Baseline models
+- Linear Regression
+- Ridge Regression
+- Lasso Regression
+- Random Forest
+- Gradient Boosting
+- XGBoost
 
-Models evaluated:
+Evaluation metrics
+
+- RMSE
+- MAE
+- R²
+
+---
+
+## 04 — Model Optimization
+
+- Hyperparameter optimization
+- Cross-validation
+- Model comparison
+- Best-model selection
+- Performance diagnostics
+
+---
+
+## 05 — RQ2 Correlation Analysis
+
+Statistical analysis of feature–FIQA relationships.
+
+Includes
+
+- Pearson correlation
+- Spearman correlation
+- Point-biserial analysis
+- Mann–Whitney U tests
+- Cohen's d
+- False Discovery Rate correction
+
+---
+
+## 06 — RQ3 Regression Analysis
+
+Adjusted statistical analysis.
+
+Includes
+
+- Multiple Linear Regression
+- HC3 robust inference
+- Variance Inflation Factor (VIF)
+- Residual diagnostics
+- Cook's distance
+- Sensitivity analyses
+- Comparison with RQ2
+
+---
+
+## 07 — Model Explainability
+
+Explainability of the final optimized prediction model.
+
+Includes
+
+- Permutation Importance
+- SHAP
+- Global explanations
+- Local explanations
+- Feature ranking
+- Comparison with RQ2 and RQ3
+
+---
+
+## 08 — Demographic Consistency Analysis
+
+Evaluation of feature–FIQA relationships across demographic groups.
+
+Includes
+
+- Group-wise correlations
+- Group-wise regression models
+- Interaction tests
+- Male-only facial hair analysis
+- Demographic consistency evaluation
+
+---
+
+# Machine Learning Models
+
+The following regression models are evaluated:
 
 - Mean Baseline
 - Linear Regression
 - Ridge Regression
 - Lasso Regression
-- Random Forest Regression
-- Gradient Boosting Regression
-- XGBoost Regression
+- Random Forest
+- Gradient Boosting
+- XGBoost
 
-Evaluation metrics:
-
-- Mean Absolute Error (MAE)
-- Root Mean Squared Error (RMSE)
-- Coefficient of Determination (R²)
+The strongest model is further optimized and interpreted using permutation importance and SHAP.
 
 ---
 
-### 5. Model Interpretation (Planned)
+# Required Data
 
-**04_model_interpretation.ipynb**
-
-- Linear model coefficient analysis
-- Feature importance analysis
-- Comparison of model explanations
-- Interpretation of demographic effects
-
----
-
-### 6. Demographic Bias Analysis (Planned)
-
-**05_bias_analysis.ipynb**
-
-- Group-wise performance evaluation
-- Error analysis across demographic groups
-- Fairness assessment
-- Discussion of demographic effects on FIQA prediction
-
----
-
-## Current Results
-
-The evaluated machine learning models produced the following test performance:
-
-| Model | Test RMSE | Test R² |
-|---------|---------:|---------:|
-| XGBoost | 0.2917 | 0.2346 |
-| Gradient Boosting | 0.2932 | 0.2268 |
-| Random Forest | 0.2946 | 0.2194 |
-| Lasso Regression | 0.3272 | 0.0369 |
-| Ridge Regression | 0.3276 | 0.0348 |
-| Linear Regression | 0.3277 | 0.0342 |
-| Mean Baseline | 0.3335 | -0.0004 |
-
-### Key Findings
-
-- Tree-based models substantially outperform linear models.
-- The relationship between facial attributes and FIQA scores appears to be nonlinear.
-- XGBoost achieved the best predictive performance.
-- Facial attributes contain useful information for FIQA prediction, but explain only part of the total score variation.
-
----
-
-## Required Data
-
-The following files are required but are not included in this repository:
+The following files are **not included** in this repository:
 
 ```text
 DiveFace_subset/
@@ -194,13 +231,13 @@ DiveFace_subset_annotations.pkl
 181952backbone.pth
 ```
 
-Place these files inside the project directory before running the notebooks.
+Place these files inside the project directory before executing the notebooks.
 
 ---
 
-## Environment
+# Environment
 
-The project was developed using:
+Developed using
 
 - Python 3
 - Google Colab
@@ -209,19 +246,34 @@ The project was developed using:
 - pandas
 - scikit-learn
 - XGBoost
-- OpenCV
+- SHAP
+- statsmodels
+- SciPy
 - Matplotlib
 
 ---
 
-## Reproducibility
+# Reproducibility
 
-To ensure a realistic evaluation setup, images belonging to the same identity are never split across training and test sets.
+The machine learning experiments use an **identity-aware train/test split**, ensuring that images of the same identity never appear in both training and test sets.
 
-An identity-aware train-test split based on the `cls` identity column is used throughout the machine learning experiments.
+All subsequent notebooks reuse the identical split to ensure reproducible statistical analyses and model explanations.
 
 ---
 
-## License
+# Results
+
+The project produces:
+
+- optimized machine learning models
+- statistical association analyses
+- adjusted regression models
+- model explainability using SHAP
+- demographic consistency analyses
+- publication-ready tables and figures
+
+---
+
+# License
 
 MIT License
