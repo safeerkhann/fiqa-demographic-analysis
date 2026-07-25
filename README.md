@@ -252,7 +252,20 @@ Developed using
 - Matplotlib
 
 ---
+## Installation
 
+Clone the repository:
+
+```bash
+git clone https://github.com/<username>/fiqa-demographic-analysis.git
+cd fiqa-demographic-analysis
+```
+
+Install the required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
 # Reproducibility
 
 The machine learning experiments use an **identity-aware train/test split**, ensuring that images of the same identity never appear in both training and test sets.
