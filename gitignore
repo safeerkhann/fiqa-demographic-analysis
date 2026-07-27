@@ -1,0 +1,200 @@
+# -------------------------------------------------------------------
+# Python
+# -------------------------------------------------------------------
+
+__pycache__/
+*.py[codz]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Tests / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py.cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Type checkers / linters
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+
+# Virtual environments
+.env
+.env.*
+!.env.example
+.envrc
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+__pypackages__/
+.pdm-python
+.pdm-build/
+.pixi/
+
+# IDE / editor files
+.vscode/
+.idea/
+.spyderproject
+.spyproject
+.ropeproject
+tempCodeRunnerFile.py
+
+# Jupyter / IPython
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+profile_default/
+ipython_config.py
+
+# Documentation builds
+docs/_build/
+/site
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+~$*
+
+# -------------------------------------------------------------------
+# FIQA project-specific files
+# -------------------------------------------------------------------
+
+# Runtime configuration generated locally
+config/runtime_config.json
+config/*runtime*.json
+
+# Keep example configuration files in Git
+!config/config.example.json
+!config/*.example.json
+
+# Raw datasets and archives
+data/
+DiveFace_subset/
+DiveFace_subset.zip
+DiveFace_subset_*.zip
+*.zip
+
+# Annotation and intermediate dataset files
+DiveFace_subset_annotations.pkl
+*.pkl
+*.pickle
+*.parquet
+*.feather
+
+# Generated score and merged data files
+diveface_cr_fiqa_scores.csv
+diveface_fiqa_merged.csv
+
+# Generic generated CSV files inside output folders
+results/**/*.csv
+
+# Pretrained checkpoints and trained models
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.joblib
+
+# Generated NumPy arrays
+*.npy
+*.npz
+
+# Generated models directory
+models/*
+!models/.gitkeep
+
+# Generated analysis results
+results/*
+!results/.gitkeep
+
+# Preserve optional curated final results
+!results/final/
+!results/final/**
+!results/README.md
+
+# Local CR-FIQA clones or external repositories
+CR-FIQA/
+cr-fiqa/
+external/
+third_party/
+
+# Google Colab and mounted-drive artifacts
+/content/
+drive/
+gdrive/
+
+# Local cache directories
+.cache/
+cache/
+tmp/
+temp/
+
+# SHAP / plotting caches and generated artifacts
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.pdf
+
+# Preserve documentation images when intentionally tracked
+!docs/
+!docs/**
+!assets/
+!assets/**
+!results/final/**/*.png
+!results/final/**/*.jpg
+!results/final/**/*.jpeg
+!results/final/**/*.svg
+!results/final/**/*.pdf
