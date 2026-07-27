@@ -1,18 +1,18 @@
-# FIQA-Demographic-Analysis
+# FIQA Demographic Analysis
 
-## Predicting Face Image Quality Assessment (FIQA) Scores from Facial Attributes and Demographic Characteristics
+## Predicting Face Image Quality Assessment Scores from Facial Attributes and Demographic Characteristics
 
-### Overview
+## Overview
 
-This project investigates whether Face Image Quality Assessment (FIQA) scores can be predicted from facial attributes and demographic information.
+This project investigates the extent to which Face Image Quality Assessment (FIQA) scores can be predicted from facial attributes, image characteristics, and demographic information.
 
-The analysis combines facial attribute annotations from the DiveFace dataset with image quality scores generated using the CR-FIQA framework. Statistical analyses and machine learning models are used to investigate which facial and image characteristics are associated with FIQA scores and whether these relationships remain consistent across demographic groups.
+Facial attribute annotations from the DiveFace dataset are combined with image-quality scores generated using the CR-FIQA framework. The resulting dataset is analyzed through exploratory data analysis, statistical inference, machine learning, model optimization, explainability methods, and demographic consistency tests.
 
-The complete workflow includes data preparation, exploratory analysis, predictive modeling, statistical inference, model explainability, and demographic consistency analysis.
+The main project workflow is implemented as standalone Python scripts. The scripts are designed to be portable and do not assume a fixed operating system, Google Drive location, project directory, checkpoint filename, or CR-FIQA installation path.
 
 ---
 
-# Research Objectives
+## Research Objectives
 
 The primary research question is:
 
@@ -28,18 +28,18 @@ The project further investigates:
 
 ---
 
-# Dataset
+## Dataset
 
-## DiveFace
+### DiveFace
 
-The project uses the DiveFace dataset containing
+The project uses a subset of the DiveFace dataset containing:
 
 - facial images
 - demographic group labels
 - facial attribute annotations
-- multiple identities per demographic group
+- multiple images per identity
 
-Demographic groups:
+The demographic groups are:
 
 - Asian Woman
 - Asian Man
@@ -48,245 +48,433 @@ Demographic groups:
 - Caucasian Woman
 - Caucasian Man
 
+The DiveFace images and annotations are not included in this repository.
+
+### CR-FIQA
+
+Image-quality scores are generated using the CR-FIQA framework.
+
+A compatible CR-FIQA checkpoint is selected by the user during project setup. The repository does not require a fixed checkpoint filename or a specific local installation path.
+
+The generated FIQA scores are merged with the DiveFace annotation table to create the dataset used by all subsequent analysis scripts.
+
 ---
 
-## CR-FIQA
-
-Image quality scores are generated using the CR-FIQA framework.
-
-The resulting FIQA scores are merged with the DiveFace annotations to create the final analysis dataset.
-
----
-
-# Repository Structure
+## Repository Structure
 
 ```text
 fiqa-demographic-analysis/
 │
+├── scripts/
+│   ├── setup_project.py
+│   ├── extract_scores.py
+│   ├── pipeline_common.py
+│   ├── run_eda.py
+│   ├── train_models.py
+│   ├── optimize_models.py
+│   ├── correlation_analysis.py
+│   ├── regression_analysis.py
+│   ├── explainability.py
+│   ├── demographic_consistency.py
+│   ├── run_pipeline.py
+│   └── STANDALONE_PIPELINE.md
+│
+├── config/
+│   └── config.example.json
+│
 ├── notebooks/
-│   ├── 00_colab_setup.ipynb
-│   ├── 01_extract_and_merge_cr_fiqa_scores.ipynb
-│   ├── 02_exploratory_data_analysis.ipynb
-│   ├── 03_ml_models.ipynb
-│   ├── 04_model_optimization.ipynb
-│   ├── 05_rq2_correlation_analysis.ipynb
-│   ├── 06_rq3_regression_analysis.ipynb
-│   ├── 07_model_explainability.ipynb
-│   └── 08_demographic_consistency_analysis.ipynb
+│   └── archive/
 │
 ├── models/
+│   └── .gitkeep
+│
 ├── results/
+│   └── .gitkeep
+│
 ├── README.md
 ├── LICENSE
 ├── requirements.txt
 └── .gitignore
 ```
 
----
-
-# Workflow
-
-## 00 — Environment Setup
-
-- Project setup
-- Dependency installation
-- Google Drive configuration
-- CR-FIQA setup
+The scripts form the reproducible project pipeline. The notebooks are retained only as archived exploratory material and are not required to execute the analysis.
 
 ---
 
-## 01 — CR-FIQA Score Extraction
+## Workflow
 
-- Load pretrained CR-FIQA model
-- Generate FIQA scores
-- Merge scores with DiveFace annotations
-- Export merged dataset
+### 1. Project Setup
 
----
+`scripts/setup_project.py` validates all user-supplied paths and creates a runtime configuration file.
 
-## 02 — Exploratory Data Analysis
+The setup is dynamic and does not hardcode:
 
-- Dataset overview
-- Missing-value analysis
-- Distribution analysis
-- Demographic overview
-- Correlation exploration
-- Visualizations
+- a Google Drive path
+- a project directory
+- an image directory
+- an annotation filename
+- a checkpoint filename
+- a CR-FIQA repository path
 
----
+The script creates:
 
-## 03 — Machine Learning Models
+```text
+config/runtime_config.json
+```
 
-- Identity-aware train/test split
-- Feature preprocessing
-- Baseline models
+This local runtime file is ignored by Git because it may contain machine-specific paths.
+
+### 2. CR-FIQA Score Extraction
+
+`scripts/extract_scores.py`:
+
+- loads a user-selected CR-FIQA-compatible backbone
+- loads the selected checkpoint
+- preprocesses the facial images
+- generates CR-FIQA scores
+- records unreadable images
+- merges the scores with the annotation table
+- exports the merged analysis dataset
+
+### 3. Exploratory Data Analysis
+
+`scripts/run_eda.py` produces:
+
+- dataset summaries
+- missing-value diagnostics
+- feature distributions
+- demographic group summaries
+- target-score distributions
+- exploratory figures and tables
+
+### 4. Machine Learning Models
+
+`scripts/train_models.py` performs:
+
+- identity-aware train/test splitting
+- feature preprocessing
+- baseline evaluation
 - Linear Regression
 - Ridge Regression
 - Lasso Regression
 - Random Forest
 - Gradient Boosting
-- XGBoost
+- optional XGBoost
+- RMSE, MAE, and R² evaluation
+- model and prediction export
 
-Evaluation metrics
+The identity-aware split ensures that images belonging to the same identity do not appear in both the training and test sets.
 
-- RMSE
-- MAE
-- R²
+### 5. Model Optimization
 
----
+`scripts/optimize_models.py`:
 
-## 04 — Model Optimization
+- reuses the saved train/test split
+- performs identity-aware cross-validation
+- tunes supported nonlinear models
+- compares optimized models
+- selects and saves the best model
+- exports predictions and model diagnostics
 
-- Hyperparameter optimization
-- Cross-validation
-- Model comparison
-- Best-model selection
-- Performance diagnostics
+### 6. Correlation Analysis
 
----
-
-## 05 — RQ2 Correlation Analysis
-
-Statistical analysis of feature–FIQA relationships.
-
-Includes
+`scripts/correlation_analysis.py` investigates feature–FIQA relationships using:
 
 - Pearson correlation
 - Spearman correlation
-- Point-biserial analysis
+- point-biserial correlation
+- Welch tests
 - Mann–Whitney U tests
 - Cohen's d
-- False Discovery Rate correction
+- false discovery rate correction
 
----
+### 7. Regression Analysis
 
-## 06 — RQ3 Regression Analysis
+`scripts/regression_analysis.py` performs adjusted statistical analysis using:
 
-Adjusted statistical analysis.
-
-Includes
-
-- Multiple Linear Regression
-- HC3 robust inference
-- Variance Inflation Factor (VIF)
-- Residual diagnostics
+- multiple linear regression
+- HC3 robust standard errors
+- false discovery rate correction
+- variance inflation factors
+- residual diagnostics
 - Cook's distance
-- Sensitivity analyses
-- Comparison with RQ2
+- sensitivity analyses
+- comparison with the correlation analysis
+
+### 8. Model Explainability
+
+`scripts/explainability.py` explains the best optimized model using:
+
+- permutation importance
+- optional SHAP analysis
+- global feature rankings
+- model-performance summaries
+- comparison with the correlation and regression results
+
+### 9. Demographic Consistency Analysis
+
+`scripts/demographic_consistency.py` evaluates whether feature effects remain stable across demographic groups.
+
+It includes:
+
+- group-wise correlation analysis
+- group-wise regression models
+- common-predictor comparisons
+- feature-by-group interaction tests
+- male-only facial-hair analyses
+- demographic consistency summaries
+
+Age is excluded from the demographic consistency feature analysis, while facial-hair variables are evaluated only for male demographic groups.
+
+### 10. Full Pipeline Execution
+
+`scripts/run_pipeline.py` executes the analysis stages in sequence after score extraction has been completed.
 
 ---
 
-## 07 — Model Explainability
+## Required External Data
 
-Explainability of the final optimized prediction model.
+The following resources are not included in this repository:
 
-Includes
+- DiveFace image directory
+- DiveFace annotation file
+- compatible CR-FIQA checkpoint
+- CR-FIQA source repository
 
-- Permutation Importance
-- SHAP
-- Global explanations
-- Local explanations
-- Feature ranking
-- Comparison with RQ2 and RQ3
+Large datasets, checkpoints, trained models, runtime configurations, and generated outputs are excluded through `.gitignore`.
 
 ---
 
-## 08 — Demographic Consistency Analysis
-
-Evaluation of feature–FIQA relationships across demographic groups.
-
-Includes
-
-- Group-wise correlations
-- Group-wise regression models
-- Interaction tests
-- Male-only facial hair analysis
-- Demographic consistency evaluation
-
----
-
-# Machine Learning Models
-
-The following regression models are evaluated:
-
-- Mean Baseline
-- Linear Regression
-- Ridge Regression
-- Lasso Regression
-- Random Forest
-- Gradient Boosting
-- XGBoost
-
-The strongest model is further optimized and interpreted using permutation importance and SHAP.
-
----
-
-# Required Data
-
-The following files are **not included** in this repository:
-
-```text
-DiveFace_subset/
-DiveFace_subset_annotations.pkl
-195520backbone.pth
-```
-
-Place these files inside the project directory before executing the notebooks.
-
----
-
-# Environment
-
-Developed using
-
-- Python 3
-- Google Colab
-- PyTorch
-- NumPy
-- pandas
-- scikit-learn
-- XGBoost
-- SHAP
-- statsmodels
-- SciPy
-- Matplotlib
-
----
 ## Installation
 
 Clone the repository:
 
 ```bash
-git clone https://github.com/<username>/fiqa-demographic-analysis.git
+git clone https://github.com/safeerkhann/fiqa-demographic-analysis.git
 cd fiqa-demographic-analysis
 ```
 
-Install the required Python packages:
+Create and activate a virtual environment.
+
+Linux or macOS:
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+Windows PowerShell:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+Install the required packages:
+
+```bash
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
-# Reproducibility
-
-The machine learning experiments use an **identity-aware train/test split**, ensuring that images of the same identity never appear in both training and test sets.
-
-All subsequent notebooks reuse the identical split to ensure reproducible statistical analyses and model explanations.
 
 ---
 
-# Results
+## Configuration
 
-The project produces:
+Run the setup script with paths matching your local environment:
 
-- optimized machine learning models
-- statistical association analyses
-- adjusted regression models
-- model explainability using SHAP
-- demographic consistency analyses
-- publication-ready tables and figures
+```bash
+python scripts/setup_project.py \
+  --project-dir /path/to/project-data \
+  --images /path/to/diveface-images \
+  --annotations /path/to/annotations.pkl \
+  --checkpoint /path/to/compatible-checkpoint.pth \
+  --cr-fiqa-dir /path/to/CR-FIQA \
+  --create-output-dirs
+```
+
+The generated configuration is saved by default as:
+
+```text
+config/runtime_config.json
+```
+
+A user may select any compatible CR-FIQA checkpoint. The corresponding architecture must be passed to the score-extraction script.
 
 ---
 
-# License
+## Usage
 
-MIT License
+### Smoke Test
+
+Before processing the full dataset, run score extraction on a small number of images:
+
+```bash
+python scripts/extract_scores.py \
+  --config config/runtime_config.json \
+  --architecture iresnet100 \
+  --batch-size 16 \
+  --limit 10
+```
+
+The architecture must match the selected checkpoint.
+
+### Full Score Extraction
+
+```bash
+python scripts/extract_scores.py \
+  --config config/runtime_config.json \
+  --architecture iresnet100 \
+  --batch-size 32
+```
+
+### Run the Remaining Pipeline
+
+Quick execution:
+
+```bash
+python scripts/run_pipeline.py \
+  --config config/runtime_config.json \
+  --optimization-mode quick
+```
+
+Quick execution without optional XGBoost and SHAP stages:
+
+```bash
+python scripts/run_pipeline.py \
+  --config config/runtime_config.json \
+  --optimization-mode quick \
+  --skip-xgboost \
+  --skip-shap
+```
+
+Full model optimization:
+
+```bash
+python scripts/run_pipeline.py \
+  --config config/runtime_config.json \
+  --optimization-mode full
+```
+
+Each script may also be executed individually. Available arguments can be inspected with:
+
+```bash
+python scripts/<script_name>.py --help
+```
+
+---
+
+## Output Structure
+
+By default, generated files are written below the configured results and models directories.
+
+Example:
+
+```text
+results/
+├── 01_score_extraction/
+├── 02_eda/
+├── 03_ml_models/
+├── 04_model_optimization/
+├── 05_correlation_analysis/
+├── 06_regression_analysis/
+├── 07_explainability/
+└── 08_demographic_consistency/
+
+models/
+├── 03_ml_models/
+└── 04_model_optimization/
+```
+
+Generated outputs may include:
+
+- CR-FIQA score files
+- merged analysis datasets
+- train/test split assignments
+- trained models
+- optimized models
+- prediction files
+- statistical result tables
+- feature-importance rankings
+- SHAP outputs
+- demographic consistency tables
+- publication-ready figures
+
+---
+
+## Reproducibility
+
+The project uses an identity-aware train/test split so that images from the same identity are not distributed across both the training and test sets.
+
+The split assignment is saved and reused by later modeling and explainability stages. This prevents the optimization and explanation scripts from creating inconsistent evaluation partitions.
+
+Additional reproducibility measures include:
+
+- centralized path handling through the runtime configuration
+- shared feature definitions in `pipeline_common.py`
+- fixed random seeds where applicable
+- saved model artifacts
+- saved prediction tables
+- explicit command-line arguments
+- reusable standalone scripts
+
+Because some machine-learning libraries and GPU operations may contain nondeterministic components, exact numerical equality across all hardware and software environments cannot always be guaranteed.
+
+---
+
+## Main Evaluation Metrics
+
+The predictive models are evaluated using:
+
+- Root Mean Squared Error
+- Mean Absolute Error
+- coefficient of determination, R²
+
+Statistical analyses additionally report:
+
+- correlation coefficients
+- adjusted regression coefficients
+- robust confidence intervals
+- false-discovery-rate-adjusted p-values
+- effect sizes
+- variance inflation factors
+- interaction-test results
+
+---
+
+## Dependencies
+
+The project is based on:
+
+- Python 3
+- PyTorch
+- NumPy
+- pandas
+- SciPy
+- scikit-learn
+- statsmodels
+- Matplotlib
+- OpenCV
+- XGBoost
+- SHAP
+- joblib
+- tqdm
+
+The exact installation requirements are listed in `requirements.txt`.
+
+---
+
+## Notes
+
+- Do not commit datasets, annotation files, model checkpoints, local runtime configurations, or generated model files.
+- `config/config.example.json` may be committed as a path template.
+- `config/runtime_config.json` should remain local.
+- Checkpoint architecture and the `--architecture` argument must match.
+- Run the smoke test before starting full CR-FIQA extraction.
+- The archived notebooks are not part of the required execution path.
+
+---
+
+## License
+
+This project is licensed under the MIT License.
