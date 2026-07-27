@@ -174,18 +174,14 @@ def count_files_by_extension(
     )
 
 
-def resolve_output_path(path: Path, project_dir: Path) -> Path:
+def resolve_output_path(path: Path) -> Path:
+    """Resolve the configuration output path.
+
+    Relative paths are resolved from the directory in which the command is
+    executed. This makes the default ``config/runtime_config.json`` land in the
+    cloned repository when the script is run from the repository root.
     """
-    Resolve output paths relative to the project directory.
-
-    Absolute paths remain unchanged.
-    """
-    path = path.expanduser()
-
-    if not path.is_absolute():
-        path = project_dir / path
-
-    return path.resolve()
+    return path.expanduser().resolve()
 
 
 def build_configuration(args: argparse.Namespace) -> dict:
@@ -261,9 +257,8 @@ def build_configuration(args: argparse.Namespace) -> dict:
 def save_configuration(
     configuration: dict,
     output_path: Path,
-    project_dir: Path,
 ) -> Path:
-    output_path = resolve_output_path(output_path, project_dir)
+    output_path = resolve_output_path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     output_path.write_text(
@@ -283,7 +278,6 @@ def main() -> int:
         output_path = save_configuration(
             configuration,
             args.output_config,
-            Path(configuration["project_dir"]),
         )
 
     except (FileNotFoundError, NotADirectoryError, ValueError) as error:
