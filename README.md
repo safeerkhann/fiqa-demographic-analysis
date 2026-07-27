@@ -228,7 +228,7 @@ The following files are **not included** in this repository:
 ```text
 DiveFace_subset/
 DiveFace_subset_annotations.pkl
-181952backbone.pth
+195520backbone.pth
 ```
 
 Place these files inside the project directory before executing the notebooks.
